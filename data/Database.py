@@ -15,12 +15,22 @@ class Database(object):
 
     def __init__(self):   
         self.con = self.connect()
-        self.cursor = self.con.cursor()
+        self.cursor = self.con.cursor(buffered = True)
+        self.cursor1 = self.con.cursor(buffered = True)
         self.cursor_prep = self.con.cursor(cursor_class = MySQLCursorPrepared)    
 
     def select_all(self, table_name):
         self.cursor.execute("SELECT * FROM {}".format(table_name))
         return self.cursor.fetchall()
+
+    def insert_into(self, table_name, columns, values):
+        if not isinstance(table_name, str):
+            raise TypeError("Expected string input")
+        if not isinstance(columns, list):
+            raise TypeError("Expected list input")
+        if not isinstance(values, list):
+            raise TypeError("Expected list input")
+        prep_statem = "INSERT INTO {} (country, `index`) VALUES (?, ?)".format(table_name)
 
     def merge_tables(self):
         self.cursor.execute("SELECT * FROM fragile_states_indexes")
@@ -29,9 +39,40 @@ class Database(object):
         countries = [item[1] for item in self.cursor.fetchall()]
         self.cursor.execute("SELECT a.Country, a.`index` AS A, b.`index` AS B, c.`index` AS C, d.`index` FROM fragile_states_indexes as a INNER JOIN factionalized_elites_indexes as b ON a.Country = b.Country INNER JOIN group_grievances_indexes as c ON a.Country = c.Country INNER JOIN military_spendings_indexes as d ON a.Country = d.Country ORDER BY (A + B + C) DESC")
         rankings = self.cursor.fetchall()
+        #self.cursor.execute("DROP TABLE world_map")
+        #self.cursor.execute("CREATE TABLE world_map (rank int AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), FSI FLOAT(6, 2), FEI FLOAT(6, 2), GGI FLOAT(3, 2), MSI FLOAT(7, 2), continent VARCHAR(19))")
+
         for item in rankings:
-            rankings[rankings.index(item)] = list(item)
-            rankings[rankings.index(list(item))][-1] = [country_data["continent"] for country_data in data if country_data["country"] == rankings[rankings.index(list(item))][0]][0]
+            i = rankings.index(item)
+            rankings[i] = list(item)
+            rankings[i].append([country_data["continent"] for country_data in data if country_data["country"] == rankings[rankings.index(list(item))][0]][0])
+            #print(rankings[i])
+        
+            #prep_statem = "INSERT INTO world_map (country, FSI, FEI, GGI, MSI, continent) VALUES (?, ?, ?, ?, ?, ?)"
+            #self.cursor_prep.execute(prep_statem, (rankings[i][0], rankings[i][1], rankings[i][2], rankings[i][3], rankings[i][4], rankings[i][5]))
+            #self.con.commit()
+
+        d = {}
+        COLS = ["FEI", "FSI", "GGI", "MSI"]
+        CONTINENTS = ["North America", "South America", "Asia", "Europe", "Oceania", "Africa"]
+        ALIASES = { "North America": "NA", "South America": "SA", "Asia": "AS", "Europe": "EU", "Oceania": "AU", "Africa": "AF" }
+        for item in CONTINENTS: d[item] = {}
+        self.cursor.execute("SELECT * FROM world_map")
+        for row in self.cursor.fetchall():
+            self.cursor1.execute("SELECT * FROM world_map WHERE continent = '{}'".format(row[-1]))
+            rows = len(self.cursor1.fetchall())
+            d[row[-1]]["fsi"] = round((d[row[-1]]["fsi"] + row[2] / rows if "fsi" in d[row[-1]] else row[2] / rows), 2)
+            d[row[-1]]["fei"] = round((d[row[-1]]["fei"] + row[3] / rows if "fei" in d[row[-1]] else row[3] / rows), 2)
+            d[row[-1]]["ggi"] = round((d[row[-1]]["ggi"] + row[4] / rows if "ggi" in d[row[-1]] else row[4] / rows), 2)
+            d[row[-1]]["msi"] = round((d[row[-1]]["msi"] + row[5] / rows if "msi" in d[row[-1]] else row[5] / rows), 2)
+        #self.cursor.execute("DROP TABLE if exists continents")
+        #self.cursor.execute("CREATE TABLE continents (rank int AUTO_INCREMENT PRIMARY KEY, FSI FLOAT(6, 2), FEI FLOAT(6, 2), GGI FLOAT(3, 2), MSI FLOAT(7, 2), continent VARCHAR(19), continent_id VARCHAR(4))")
+        #for item in list(d.values()):
+            #prep_statem = "INSERT INTO continents (FSI, FEI, GGI, MSI, continent, continent_id) VALUES(?, ?, ?, ?, ?, ?)"
+            #self.cursor_prep.execute(prep_statem, (item["fsi"], item["fei"], item["ggi"], item["msi"], list(d.keys())[list(d.values()).index(item)], ALIASES[list(d.keys())[list(d.values()).index(item)]]))
+            #self.con.commit()
+        logging.info(d)
+
         return rankings
 
     def __del__(self):
@@ -39,5 +80,5 @@ class Database(object):
 
 db = Database()
 d = db.merge_tables()
-for row in d:
-    logging.info(row)
+#for row in d:
+    #logging.info(row)
