@@ -21,8 +21,8 @@ const Chart = (props) => {
     dataFormat: "json",
     dataSource: {
         "chart": {
-          "caption": "Average Annual Population Growth",
-          "subcaption": " 1955-2015",
+          "caption": props.type,
+          "subcaption": props.chart,
           "numbersuffix": "%",
           "includevalueinlabels": "1",
           "labelsepchar": ": ",
