@@ -974,5 +974,73 @@
     {
         "country": "Zimbabwe",
         "continent": "Africa"
+    },
+    {
+        "country": "DR Congo",
+        "continent": "Africa"
+    },
+    {
+        "country": "C.A. Republic",
+        "continent": "Africa"
+    },
+    {
+        "country": "Libya",
+        "continent": "Africa"
+    },
+    {
+        "country": "Burma",
+        "continent": "Asia"
+    },
+    {
+        "country": "G.-Bissau",
+        "continent": "Africa"
+    },
+    {
+        "country": "Eq. Guinea",
+        "continent": "South America"
+    },
+    {
+        "country": "Papua N.G.",
+        "continent": "Oceania"
+    },
+    {
+        "country": "Solomon Isl.",
+        "continent": "Oceania" 
+    },    
+    {
+        "country": "Russia",
+        "continent": "Europe"
+    },
+    {
+        "country": "Bosnia & Herz.",
+        "continent": "Europe"
+    },
+    {
+        "country": "Fiji",
+        "continent": "Oceania"
+    },
+    {
+        "country": "Domin. Rep.",
+        "continent": "North America"
+    },
+    {
+        "country": "Tr.&Tobago",
+        "continent": "North America"
+    },
+    {
+        "country": "USA",
+        "continent": "North America"
+    },
+    {
+        "country": "UK",
+        "continent": "Europe"
+    },
+    {
+        "country": "UA Emirates",
+        "continent": "Asia"
+    },
+    {
+        "country": "Czechia",
+        "continent": "Europe"
     }
 ]
