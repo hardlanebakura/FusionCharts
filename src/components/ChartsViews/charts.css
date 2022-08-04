@@ -1,0 +1,4 @@
+#world {
+    background: linear-gradient(270deg, var(--db), var(--p));
+    color: #fff;
+}

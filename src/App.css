@@ -28,6 +28,29 @@
   color: #61dafb;
 }
 
+#charts-row {
+  display: flex;
+  justify-content: center;
+  margin: 17px 0;
+}
+
+#charts-row div {
+  padding: 12px;
+  margin: 0 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#charts-row div:hover {
+  background: linear-gradient(270deg, var(--db), var(--p));
+  color: #fff;
+}
+
+.active {
+  background: linear-gradient(270deg, var(--db), var(--p));
+  color: #fff;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
