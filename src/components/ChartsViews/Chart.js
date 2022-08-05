@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './charts.css';
 import FusionCharts from 'fusioncharts';
 import Maps from 'fusioncharts/fusioncharts.maps';
 import World from 'fusioncharts/maps/fusioncharts.world';
 import ReactFC from 'react-fusioncharts';
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import axios from 'axios';
+import { WorldMap } from '../../components/';
 
 const Chart = (props) => {
 
   console.log(props.chart);
   console.log(props.type);
   console.log(props.chart.toLowerCase().replaceAll(" ", "_"));
-
   ReactFC.fcRoot(FusionCharts, Maps, World, FusionTheme);
+
+  useEffect(() => {
+
+  })
 
   const chartConfig = {
     type: "world",
@@ -88,7 +93,7 @@ const Chart = (props) => {
 
   return (
     <div>
-        <ReactFC {...chartConfig} />
+      { (props.type === "World Map") ? <WorldMap type = { props.type } chart = { props.chart } /> : <div>1</div> }
     </div>
   )
 }

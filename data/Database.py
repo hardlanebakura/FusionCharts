@@ -75,6 +75,24 @@ class Database(object):
 
         return rankings
 
+    def get_chart(self, table_name):
+        self.cursor.execute("SELECT * FROM {}".format(table_name))
+        logging.info(self.cursor.fetchall())
+        col = "".join([string[0] for string in table_name.split("_")])
+        self.cursor.execute("SELECT {} FROM continents".format(col))
+        results = self.cursor.fetchall()
+        max_result = max(results)[0]
+        min_result = min(results)[0]
+        gradient_1 = round((min_result + (max_result - min_result) * 0.3333), 2)
+        gradient_2 = round((min_result + (max_result - min_result) * 0.67), 2)
+        d = { "min_result": min_result, "gradient_1": gradient_1, "gradient_2": gradient_2, "max_result": max_result }
+        print(d)
+        return d
+
+    def get_query(self, query):
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
     def __del__(self):
         self.con.close()
 
@@ -82,3 +100,5 @@ db = Database()
 d = db.merge_tables()
 #for row in d:
     #logging.info(row)
+
+db.get_chart("fragile_states_indexes")
