@@ -16,6 +16,10 @@ cursor_prep = db.cursor(cursor_class = MySQLCursorPrepared)
 cursor.execute("CREATE TABLE factionalized_elites_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(6, 2))")
 cursor.execute("CREATE TABLE group_grievances_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(3, 2))")
 cursor.execute("CREATE TABLE military_spendings_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(7, 2))") """
+""" cursor.execute("CREATE TABLE military_spendings_perc_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(4, 2))")
+cursor.execute("CREATE TABLE inflation_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(7, 2))")
+cursor.execute("CREATE TABLE forest_areas_perc_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(7, 2))")
+cursor.execute("CREATE TABLE oil_reserves_indexes (rank INT AUTO_INCREMENT PRIMARY KEY, country VARCHAR(89), `index` FLOAT(5, 2))") """
 
 def json_to_db(file_name, *argv):
     file = open("./json/{}.json".format(file_name))
@@ -35,3 +39,7 @@ def json_to_db(file_name, *argv):
 #json_to_db("factionalized_elites_indexes")
 #json_to_db("group_grievances_indexes")
 #json_to_db("military_spendings_indexes")
+#json_to_db("military_spendings_perc_indexes")
+#json_to_db("inflation_indexes")
+#json_to_db("forest_areas_perc_indexes")
+#json_to_db("oil_reserves_indexes")

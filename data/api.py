@@ -18,7 +18,7 @@ def continents():
         print(db.get_query("SELECT * FROM continents WHERE continent_id = '{}'".format("NA")))
         return [{"continent": item[-1], "{}".format(column): db.get_query("SELECT * FROM continents WHERE continent_id = '{}'".format(item[-1]))[0][COLUMNS[column]["id"]]} for item in db.select_all("continents")]
 
-    COLUMNS = { "fsi": { "id": 1, "alt": "fragile_states_indexes" }, "fei": { "id": 2, "alt": "factionalized_elites_indexes" }, "ggi": { "id": 3, "alt": "group_grievances_indexes" }, "msi": { "id": 4, "alt": "military_spendings_indexes" }}
+    COLUMNS = { "fsi": { "id": 1, "alt": "fragile_states_indexes" }, "fei": { "id": 2, "alt": "factionalized_elites_indexes" }, "ggi": { "id": 3, "alt": "group_grievances_indexes" }, "msi": { "id": 4, "alt": "military_spendings_indexes" }, "mspi": { "id": 5, "alt": "military_spendings_perc_indexes" }, "fapi": { "id": 6, "alt": "forest_areas_perc_indexes" }, "ii": { "id": 7, "alt": "inflation_indexes" }, "ori": { "id": 8, "alt": "oil_reserves_indexes" } }
     d = {}
     for k, v in COLUMNS.items():
         d[k] = { "gradients": db.get_chart(v["alt"]), "values": get_data_for_charts(k) }

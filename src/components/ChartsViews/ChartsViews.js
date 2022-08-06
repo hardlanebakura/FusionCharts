@@ -39,6 +39,7 @@ const ChartsViews = () => {
             <option>Factionalized Elites Indexes</option>
             <option>Group Grievances Indexes</option>
             <option>Military Spendings Indexes</option>
+            <option>Military Spendings Percentages Indexes</option>
           </select>
           <Chart type = { selectedItem } chart = { selected } />
         </div>
