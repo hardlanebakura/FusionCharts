@@ -26,5 +26,35 @@ def continents():
     print(continents_data)
     return d
 
+@app.route("/countries")
+@cross_origin()
+def countries():
+
+    def get_indexes(list1):
+        list2 = []
+        print(list1)
+        for item in list1:
+            list3 = []
+            for item1 in item:
+                if item.index(item1) != 0 and item.index(item1) != len(item) - 1:
+                    list3.append(item1)
+            list2.append(list3)
+        return list2
+
+    def get_zip_dict(list1):
+
+        list2 = []
+        for item in list1:
+            list2.append(dict(zip([item[0] for item in COLS if COLS.index(item) != 0 and COLS.index(item) != (len(COLS) - 1)], item)))
+        return list2
+
+    COLS = db.show("world_map")
+    print([item[0] for item in COLS if COLS.index(item) != 0 and COLS.index(item) != (len(COLS) - 1)])
+    get_indexes(COLS)
+    d = {}
+    d["least_stable_countries"] = get_zip_dict(get_indexes(db.select_all("world_map")[:5]))
+    d["most_stable_countries"] = get_zip_dict(get_indexes(db.select_all("world_map")[-5:]))
+    return d
+
 if (__name__ == "__main__"):
     app.run(debug=True)

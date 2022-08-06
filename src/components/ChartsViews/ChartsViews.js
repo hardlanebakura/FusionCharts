@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './charts.css';
 import Chart from './Chart';
+import SelectOptions from './SelectOptions'
 
 const ChartsViews = () => {
 
@@ -35,11 +36,7 @@ const ChartsViews = () => {
             </div>
           </div>
           <select id = "world-select" onChange = { activeSelect } >
-            <option>Fragile States Indexes</option>
-            <option>Factionalized Elites Indexes</option>
-            <option>Group Grievances Indexes</option>
-            <option>Military Spendings Indexes</option>
-            <option>Military Spendings Percentages Indexes</option>
+            <SelectOptions type = { selectedItem } />
           </select>
           <Chart type = { selectedItem } chart = { selected } />
         </div>

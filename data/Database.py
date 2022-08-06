@@ -49,9 +49,9 @@ class Database(object):
             rankings[i].append([country_data["continent"] for country_data in data if country_data["country"] == rankings[rankings.index(list(item))][0]][0])
             #print(rankings[i])
         
-            prep_statem = "INSERT INTO world_map (country, FSI, FEI, GGI, MSI, MSPI, FAPI, II, ORI, continent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            self.cursor_prep.execute(prep_statem, (rankings[i][0], rankings[i][1], rankings[i][2], rankings[i][3], rankings[i][4], rankings[i][5], rankings[i][6], rankings[i][7], rankings[i][8], rankings[i][9]))
-            self.con.commit()
+            #prep_statem = "INSERT INTO world_map (country, FSI, FEI, GGI, MSI, MSPI, FAPI, II, ORI, continent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            #self.cursor_prep.execute(prep_statem, (rankings[i][0], rankings[i][1], rankings[i][2], rankings[i][3], rankings[i][4], rankings[i][5], rankings[i][6], rankings[i][7], rankings[i][8], rankings[i][9]))
+            #self.con.commit()
 
         d = {}
         COLS = ["FEI", "FSI", "GGI", "MSI"]
@@ -98,8 +98,9 @@ class Database(object):
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-    def __del__(self):
-        self.con.close()
+    def show(self, table_name):
+        self.cursor.execute("SHOW columns FROM {}".format(table_name))
+        return self.cursor.fetchall()
 
 db = Database()
 d = db.merge_tables()
