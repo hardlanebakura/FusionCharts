@@ -4,12 +4,10 @@ import Chart from './Chart';
 
 const ChartsViews = () => {
 
-    const [active, setActive] = useState(false);
     const [selectedItem, setSelectedItem] = useState("Simple Chart");
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState("fragile_states_indexes");
 
     const activeClass = (e) => {
-      setActive(true);
       e.target.classList.add("active");
       const arr = Array.from(document.getElementById("charts-row").getElementsByTagName("div"));
       for (const item of arr) if (item.innerText !== e.target.innerText) item.classList.remove("active");
@@ -23,7 +21,7 @@ const ChartsViews = () => {
     return (
         <div id = "chart">
           <div id = "charts-row">
-            <div className = "charts-row__display-item" onClick = { activeClass } >
+            <div className = "charts-row__display-item active" onClick = { activeClass } >
               Simple Chart
             </div>
             <div className = "charts-row__display-item" onClick = { activeClass } >

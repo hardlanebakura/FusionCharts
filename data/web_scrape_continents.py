@@ -8,6 +8,7 @@ FEI_URL = "{}factionalized_elites_index/".format(URL)
 GROUP_GRI_URL = "{}group_grievance_index/".format(URL)
 MIL_SPEND_URL = "{}mil_spend/".format(URL)
 MIL_SPEND_PERC_URL = "{}mil_spend_gdp/".format(URL)
+INFLA_URL = "{}inflation_annual/".format(URL)
 
 def get_fsi(fsi_url):
     driver.get(fsi_url)
@@ -60,9 +61,19 @@ def get_military_spendings_perc(military_spendings_perc_url):
     for i in range(1, 140):
         d = {}
         d["country_name"] = get_element_text("/html/body/div[3]/div/div[1]/div[2]/div[3]/table/tbody/tr[{}]/td[1]/a".format(i))
-        d["country_military_spending_perc"] = get_element_text("/html/body/div[3]/div/div[1]/div[2]/div[3]/table/tbody/tr[{}]/td[2]".format(i))
+        d["inflation"] = get_element_text("/html/body/div[3]/div/div[1]/div[2]/div[3]/table/tbody/tr[{}]/td[2]".format(i))
         list1.append(d)
     write_to_json("military_spendings_percentages_indexes", list1)
+
+def get_inflations(infl_url):
+    driver.get(infl_url)
+
+    list1 = []
+    for i in range(1, 172):
+        d = {}
+        d["country_name"] = get_element_text("/html/body/div[3]/div/div[1]/div[2]/div[3]/table/tbody/tr[{}]/td[1]/a".format(i))
+        d["country_military_spending_perc"] = get_element_text("/html/body/div[3]/div/div[1]/div[2]/div[3]/table/tbody/tr[{}]/td[2]".format(i))
+    write_to_json("inflation_indexes", list1)
 
 def write_to_json(file_name, data):
     with open("./json/{}.json".format(file_name), "w") as file:
