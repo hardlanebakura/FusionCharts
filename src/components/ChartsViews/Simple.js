@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './charts.css';
 import axios from 'axios';
+import FusionCharts from 'fusioncharts';
+import Charts from 'fusioncharts/fusioncharts.charts';
+import ReactFC from 'react-fusioncharts';
+import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
 const Simple = ({chart}) => {
 

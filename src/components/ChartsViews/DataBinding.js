@@ -1,8 +1,8 @@
 import React from 'react'
 
-const DataBinding = (properties) => {
+const DataBinding = ({chart}) => {
   return (
-    <div id = "data-binding" onClick = { properties.activeClass } >DataBinding</div>
+    <div id = "data-binding">DataBinding</div>
   )
 }
 

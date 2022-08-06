@@ -10,10 +10,8 @@ import { getConfig } from '@testing-library/react';
 
 const WorldMap = (props) => {
 
-  console.log(props.chart);
-  console.log(props.type);
-  var chart = "";
-  for (const char of props.chart.toLowerCase().replaceAll(" ", "_").split("_")) chart += char[0];
+  const getChart = (string) => { chart = ""; for (const char of string.toLowerCase().replaceAll(" ", "_").split("_")) chart += char[0]; return chart; }
+  var chart = getChart(props.chart);
   
   ReactFC.fcRoot(FusionCharts, Maps, World, FusionTheme);
   const [gradients, setGradients] = useState([]);
@@ -25,21 +23,28 @@ const WorldMap = (props) => {
     const getData = async () => {
       const data = await axios.get("http://127.0.0.1:5000/continents")
       const response = await data.data;
-      console.log(response);
-      console.log(response[chart]["gradients"]);
-      setGradients(Object.values(response[chart]["gradients"]));
-      var d = [];
-      for (const item of Object.values(response[chart]["values"])) d.push({ "id": item["continent"], "value": item[chart], "showLabel": "1" });
-      setValues(d);
-      console.log(d);
+      console.log(chart);
+      if (chart in response) {
+        console.log(response[chart]["gradients"]);
+        setGradients(Object.values(response[chart]["gradients"]));
+        var d = [];
+        for (const item of Object.values(response[chart]["values"])) d.push({ "id": item["continent"], "value": item[chart], "showLabel": "1" });
+        setValues(d);
+        console.log(d);
+        return true;
+      }
+      else return false;
     }
-    getData();
+    getData().then(response => { if (response === false) { 
+      chart = getChart(document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText); getData(); 
+    } });
     if (gradients.length > 0) gradients.sort((a, b) => a - b);
-  }, [gradients.length === 0, props.chart])
+  }, [gradients.length === 0, chart])
 
   const getChartsConfig = () => {
     console.log(chartConfig.dataSource.data);
     console.log(values);
+    chartConfig.dataSource.chart.subcaption = document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText;
     return (
       <>
         { gradients.length === 0 ? <></> : <ReactFC {...chartConfig} /> }
@@ -54,8 +59,8 @@ const WorldMap = (props) => {
     dataFormat: "json",
     dataSource: {
         "chart": {
-          "caption": props.type,
-          "subcaption": props.chart,
+          "caption": "World Map",
+          "subcaption": chart,
           "numbersuffix": "",
           "includevalueinlabels": "1",
           "labelsepchar": ": ",
