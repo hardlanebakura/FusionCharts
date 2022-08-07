@@ -5,6 +5,7 @@ const SelectOptions = ({type}) => {
   const getSimpleChartOptions = () => {
         return (
             <>
+                <option>Oil reserves</option>
                 <option>Least Stable Countries</option>
                 <option>Most Stable Countries</option>
             </>
@@ -14,6 +15,7 @@ const SelectOptions = ({type}) => {
   const getGaugeOptions = () => {
         return (
             <>
+                <option>Oil reserves</option>
                 <option>Least Stable Countries</option>
                 <option>Most Stable Countries</option>
             </>

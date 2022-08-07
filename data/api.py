@@ -42,18 +42,34 @@ def countries():
         return list2
 
     def get_zip_dict(list1):
-
         list2 = []
         for item in list1:
             list2.append(dict(zip([item[0] for item in COLS if COLS.index(item) != 0 and COLS.index(item) != (len(COLS) - 1)], item)))
         return list2
 
+    def get_zip_dict_countries(list1):
+        list2 = []
+        for item in list1:
+            list2.append(dict(zip([item for item in COUNTRY_COLS], item[1:])))
+            #print(item)
+        return list2
+
+    #keep only columns that affect country's stability ranking
+    def stability_rank_format(list1):
+        UNAFFECTED = ["FAPI", "ORI", "MSI", "MSPI"]
+        for item in list1: 
+            for k in UNAFFECTED:
+                del list1[list1.index(item)][k]
+        return list1
+
     COLS = db.show("world_map")
+    COUNTRY_COLS = ["country", "index"]
     print([item[0] for item in COLS if COLS.index(item) != 0 and COLS.index(item) != (len(COLS) - 1)])
     get_indexes(COLS)
     d = {}
-    d["least_stable_countries"] = get_zip_dict(get_indexes(db.select_all("world_map")[:5]))
-    d["most_stable_countries"] = get_zip_dict(get_indexes(db.select_all("world_map")[-5:]))
+    d["least_stable_countries"] = stability_rank_format(get_zip_dict(get_indexes(db.select_all("world_map")[:5])))
+    d["most_stable_countries"] = stability_rank_format(get_zip_dict(get_indexes(db.select_all("world_map")[-5:])))
+    d["oil_reserves"] = get_zip_dict_countries(db.select_all("oil_reserves_indexes")[:5])
     return d
 
 if (__name__ == "__main__"):
