@@ -14,7 +14,7 @@ const Chart = (props) => {
 
   return (
     <div>
-      { (props.type === "Simple Chart") ? <Simple chart = { props.chart } /> : (props.type === "Gauge") ? <Gauge chart = { props.chart } /> : (props.type === "Data Binding") ? <DataBinding chart = { props.chart } /> : (props.type === "World Map") ? <WorldMap type = { props.type } chart = { props.chart } /> : <div>1</div> }
+      { (props.type === "Simple Chart") ? <Simple chart = { props.chart } /> : (props.type === "Gauge") ? <Gauge chart = { props.chart } gaugeData = { props.gaugeData } /> : (props.type === "Data Binding") ? <DataBinding chart = { props.chart } /> : (props.type === "World Map") ? <WorldMap type = { props.type } chart = { props.chart } /> : <div>1</div> }
     </div>
   )
 }

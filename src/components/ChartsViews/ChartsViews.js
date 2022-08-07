@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './charts.css';
 import Chart from './Chart';
-import SelectOptions from './SelectOptions'
+import SelectOptions from './SelectOptions';
+import './charts.css';
+import axios from 'axios';
+import { useEffect } from 'react';
+import gaugeData from './companies_with_highest_rating_indexes.json';
 
 const ChartsViews = () => {
 
@@ -36,9 +40,9 @@ const ChartsViews = () => {
             </div>
           </div>
           <select id = "world-select" onChange = { activeSelect } >
-            <SelectOptions type = { selectedItem } />
+            <SelectOptions type = { selectedItem } gaugeData = { gaugeData } />
           </select>
-          <Chart type = { selectedItem } chart = { selected } />
+          <Chart type = { selectedItem } chart = { selected } gaugeData = { gaugeData } />
         </div>
     );
 }

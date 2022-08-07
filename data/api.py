@@ -72,5 +72,10 @@ def countries():
     d["oil_reserves"] = get_zip_dict_countries(db.select_all("oil_reserves_indexes")[:5])
     return d
 
+@app.route("/companies")
+@cross_origin()
+def companies():
+    return {"highest_rating_companies": [{"company": item[1], "value": item[2]} for item in db.select_all("companies_ratings_indexes")]}
+
 if (__name__ == "__main__"):
     app.run(debug=True)

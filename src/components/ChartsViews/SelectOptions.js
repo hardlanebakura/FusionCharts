@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 
-const SelectOptions = ({type}) => {
+const SelectOptions = ({type, gaugeData}) => {
   
   const getSimpleChartOptions = () => {
         return (
@@ -13,11 +14,16 @@ const SelectOptions = ({type}) => {
   }
     
   const getGaugeOptions = () => {
+        
+        console.log(gaugeData);
+
         return (
             <>
-                <option>Oil reserves</option>
-                <option>Least Stable Countries</option>
-                <option>Most Stable Countries</option>
+              { gaugeData.map((item) => {
+                return (
+                 <option>{ item["company"] }</option>   
+                )
+              }) } 
             </>
           )
   }
