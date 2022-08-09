@@ -9,9 +9,8 @@ import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 const Gauge = ({chart, gaugeData}) => {
 
   var selectedItem = document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText;
-  const [values, setValues] = useState([gaugeData.filter((item) => item.company === chart)[0]["satisfaction_percentage"]]);
+  const [values, setValues] = useState((chart in gaugeData[0]) ? gaugeData.filter((item) => item.company === chart)[0]["satisfaction_percentage"] : []);
   const [selected, setSelected] = useState(selectedItem);
-  console.log(chart);
 
   ReactFC.fcRoot(FusionCharts, Widgets, FusionTheme);
 
@@ -21,8 +20,8 @@ const Gauge = ({chart, gaugeData}) => {
 
   useEffect(() => {
     //console.log(document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText);
-    setSelected(chart)
-    setValues([gaugeData.filter((item) => item.company === chart)[0]["satisfaction_percentage"]])
+    setSelected(document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText)
+    setValues([gaugeData.filter((item) => item.company === document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText)[0]["satisfaction_percentage"]])
   }, [selectedItem]);
 
   const chartConfig = {

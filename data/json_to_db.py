@@ -1,6 +1,7 @@
 import json
 import mysql.connector
 from mysql.connector.cursor import MySQLCursorPrepared
+import os
 
 db = mysql.connector.connect(
     host = "localhost",
@@ -40,7 +41,6 @@ def json_companies_to_db(file_name, *argv):
     file = open("./json/{}.json".format(file_name))
     data = json.load(file)
     table = file_name if len(argv) == 0 else argv[0]
-    print(table)
     #cursor.execute("DROP TABLE {}".format(table))
     #cursor.execute("DELETE FROM {}".format(table))
     db.commit()
@@ -49,6 +49,15 @@ def json_companies_to_db(file_name, *argv):
         prep_statem = "INSERT INTO {} (company, rating) VALUES (?, ?)".format(table)
         cursor_prep.execute(prep_statem, (list1[0], list1[1]))
     db.commit()
+
+def json_states_to_db(file_name, *argv):
+    file = open("./json/{}".format(file_name))
+    data = json.load(file)
+    table = file_name if len(argv) == 0 else argv[0]
+    #for item in data:
+        #print(item["state"])
+    cursor.execute("CREATE TABLE if not exists states_us (rank INT AUTO_INCREMENT PRIMARY KEY, state VARCHAR(40), depression_rate TINYINT, temperature FLOAT(3, 1), tv_time FLOAT(3, 2), uninsurance_rate VARCHAR(5))")
+    return [item["state"] for item in data]
 
 #json_to_db("fragile_states_indexes")
 #json_to_db("factionalized_elites_indexes")
@@ -59,3 +68,11 @@ def json_companies_to_db(file_name, *argv):
 #json_to_db("forest_areas_perc_indexes")
 #json_to_db("oil_reserves_indexes")
 #json_companies_to_db("companies_with_highest_rating_indexes", "companies_ratings_indexes")
+
+files_us = [item for item in os.listdir("json") if item[-8:] == "_us.json"]
+print(files_us)
+d = {}
+for item in files_us: 
+    print(json_states_to_db(item))
+    d["us_" + item[:-8]] = 1
+print(d)

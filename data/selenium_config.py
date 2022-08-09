@@ -39,6 +39,18 @@ def get_text_if_exists(element):
         return None
     return selected_element.get_attribute("innerText")
 
+def select_option_by_value(element, value):
+    print(value, type(value))
+    try:
+        selected_element = driver.find_element(By.XPATH, element)
+    except e.NoSuchElementException:
+        logging.warning("Element does not exist")
+        return None
+    for option in selected_element.find_elements_by_tag_name("option"):
+        if option.get_attribute("innerText") == value:
+            option.click()
+            return
+
 def config_options(options):
     options.add_argument("--headless")
     options.add_argument("--window-size=1920,1080")

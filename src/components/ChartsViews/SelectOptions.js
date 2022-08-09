@@ -43,11 +43,10 @@ const SelectOptions = ({type, gaugeData}) => {
   const getDataBindingOptions = () => {
     return (
         <>
-            <option>Fragile States Indexes</option>
-            <option>Factionalized Elites Indexes</option>
-            <option>Group Grievances Indexes</option>
-            <option>Military Spendings Indexes</option>
-            <option>Military Spendings Percentages Indexes</option>
+            <option>Average temperatures in US</option>
+            <option>TV times in US</option>
+            <option>Depression rates in US</option>
+            <option>Uninsurance rates in US</option>
         </>
       )
   }
