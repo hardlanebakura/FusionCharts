@@ -198,5 +198,9 @@
     {
         "state": "Missouri",
         "uninsurance_rate": "10.1%"
+    },
+    {
+        "state": "Wyoming",
+        "uninsurance_rate": "12.4%"
     }
 ]

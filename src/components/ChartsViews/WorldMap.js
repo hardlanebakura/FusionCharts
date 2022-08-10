@@ -6,7 +6,6 @@ import World from 'fusioncharts/maps/fusioncharts.world';
 import ReactFC from 'react-fusioncharts';
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import axios from 'axios';
-import { getConfig } from '@testing-library/react';
 
 const WorldMap = (props) => {
 

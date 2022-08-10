@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './charts.css';
-import axios from 'axios';
 import FusionCharts from 'fusioncharts';
 import Widgets from 'fusioncharts/fusioncharts.widgets';
 import ReactFC from 'react-fusioncharts';
@@ -19,7 +18,6 @@ const Gauge = ({chart, gaugeData}) => {
   }
 
   useEffect(() => {
-    //console.log(document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText);
     setSelected(document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText)
     setValues([gaugeData.filter((item) => item.company === document.getElementsByTagName("select")[0][document.getElementsByTagName("select")[0].selectedIndex].innerText)[0]["satisfaction_percentage"]])
   }, [selectedItem]);

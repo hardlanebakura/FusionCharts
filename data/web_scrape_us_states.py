@@ -63,7 +63,8 @@ def get_depression_rates(depression_rates_url):
 #get_temperatures_by_state(TEMPERATURES_BY_STATE_URL)
 #get_tv_time_by_state(TV_TIME_BY_STATE_URL)
 #get_uninsurance_rates(UNINSURANCE_RATES_URL)
-get_depression_rates(DEPRESSION_RATES_URL)
+#get_depression_rates(DEPRESSION_RATES_URL)
+
 
 
 

@@ -1,3 +1,4 @@
+from operator import itemgetter
 from flask import Flask, render_template, render_template, url_for, jsonify
 from flask_cors import CORS, cross_origin
 from Database import *
@@ -76,6 +77,29 @@ def countries():
 @cross_origin()
 def companies():
     return {"highest_rating_companies": [{"company": item[1], "value": item[2]} for item in db.select_all("companies_ratings_indexes")]}
+
+@app.route("/states")
+@cross_origin()
+def states():
+    COLS = [item[0] for item in db.show("states_us") if db.show("states_us").index(item) != 0]
+    d = {}
+    list1 = db.select_all("states_us")
+    def format_perc(string):
+        return d["value"].split
+    for column in COLS:
+        print(column)
+        d[column] = []
+        if COLS.index(column) != 0 and COLS.index(column) != 1:
+            states = db.select("states_us", ["state", "state_id", column])
+            for item in states:
+                print(item)
+                d[column].append({ "state":item[0], "state_id":item[1], "value":item[2]})
+        dict1 = {}
+    for column in d:
+        dict1[column + "s"] = d[column]
+    d = dict1
+
+    return d
 
 if (__name__ == "__main__"):
     app.run(debug=True)

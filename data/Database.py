@@ -19,6 +19,18 @@ class Database(object):
         self.cursor1 = self.con.cursor(buffered = True)
         self.cursor_prep = self.con.cursor(cursor_class = MySQLCursorPrepared)    
 
+    def select(self, table_name, columns):
+        str = ""
+        if isinstance(columns, list):
+            for column in columns:
+                str += column
+                if columns.index(column) != len(columns) - 1:
+                    str += ", "
+        else:
+            str = columns
+        self.cursor.execute("SELECT {} FROM {}".format(str, table_name))
+        return self.cursor.fetchall()
+
     def select_all(self, table_name):
         self.cursor.execute("SELECT * FROM {}".format(table_name))
         return self.cursor.fetchall()

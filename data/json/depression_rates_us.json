@@ -198,5 +198,9 @@
     {
         "state": "Wyoming",
         "depression_rate": 44
+    },
+    {
+        "state": "District of Columbia",
+        "depression_rate": 19
     }
 ]
